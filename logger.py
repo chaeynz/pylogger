@@ -1,7 +1,8 @@
-"""This module acts as a central logging capability"""
+"""This module provides simple access to creating logs"""
 import logging
 import os
 from datetime import datetime
+# pylint: disable=all
 
 LOGFILE = "" # Define yourself
 
@@ -14,10 +15,10 @@ class Logger:
     def __new__(cls):
         if cls._instance is None:
             cls._instance = super(Logger, cls).__new__(cls)
-            logger = logging.getLogger('Logger') # pylint: disable=redefined-outer-name
+            logger = logging.getLogger('Logger') 
 
             # File Handler with milliseconds
-            file_formatter = logging.Formatter('[%(asctime)s.%(msecs)03d] %(levelname)s: %(message)s', # pylint: disable=line-too-long
+            file_formatter = logging.Formatter('[%(asctime)s.%(msecs)03d] %(levelname)s: %(message)s',
                                                 datefmt='%Y-%m-%d %H:%M:%S')
             current_time = datetime.now().strftime('%Y-%m-%d')
             if not os.path.exists('logs'):
@@ -40,7 +41,6 @@ class Logger:
         return cls._instance
 
     class ColorFilter(logging.Filter):
-        """This class is for colors :)"""
         def filter(self, record):
             if record.levelname == 'DEBUG':
                 record.msg = "\033[36mDEBUG\033[0m: " + record.msg
@@ -57,20 +57,20 @@ class Logger:
 
             return True
 
-    def log_info(self, message): # pylint: disable=missing-function-docstring
-        self.logger.info(message) # pylint: disable=no-member
+    def log_info(self, message):
+        self.logger.info(message)
 
-    def log_debug(self, message): # pylint: disable=missing-function-docstring
-        self.logger.debug(message) # pylint: disable=no-member
+    def log_debug(self, message): 
+        self.logger.debug(message)
 
-    def log_warning(self, message): # pylint: disable=missing-function-docstring
-        self.logger.warning(message) # pylint: disable=no-member
+    def log_warning(self, message):
+        self.logger.warning(message)
 
-    def log_error(self, message): # pylint: disable=missing-function-docstring
-        self.logger.error(message) # pylint: disable=no-member
+    def log_error(self, message):
+        self.logger.error(message)
 
-    def log_critical(self, message): # pylint: disable=missing-function-docstring
-        self.logger.critical(message) # pylint: disable=no-member
+    def log_critical(self, message):
+        self.logger.critical(message)
 
 
 # Creation of logger instance and methods
